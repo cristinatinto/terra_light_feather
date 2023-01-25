@@ -38,10 +38,10 @@ st.write('')
 st.markdown('The holidays and New Year are often chaotic in the crypto and DEFI space, as users make a spree of new transactions and wallets as they receive (and give) some cash and coins as holiday gifts.')
 st.markdown(' The idea of this work is to try to respond if this flurry of winter activity has impacted the Terra ecosystem, if users are creating new wallets or buying tokens with their newfound holiday wealth.')
 st.write('This dashboard comprehens the following sections:')
-st.markdown('1. Terra main activity comparison before and after holidays')
-st.markdown('2. Terra supply before and after holidays')
-st.markdown('3. Terra development before and after holidays')
-st.markdown('4. Terra staking activity before and after holidays')
+st.markdown('1. Terra main activity comparison before and after station')
+st.markdown('2. Terra supply before and after station')
+st.markdown('3. Terra development before and after station')
+st.markdown('4. Terra staking activity before and after station')
 st.write('')
 st.subheader('1. Terra main activity')
 st.markdown('**Methods:**')
@@ -59,7 +59,7 @@ select
   count(distinct tx_sender) as n_wallets,
   sum(fee) as fee_luna
 from terra.core.fact_transactions
-  where block_timestamp >= '2022-12-08' and block_timestamp <= '2023-01-08'
+  where block_timestamp >= '2023-01-07' and block_timestamp <= '2023-01-21'
 group by date
 order by date desc
 ),
@@ -74,13 +74,13 @@ select
 from terra.core.fact_transactions
 group by tx_sender
 )
-  where date >= '2022-12-08' and date <= '2023-01-08'
+  where date >= '2023-01-07' and date <= '2023-01-21'
 group by date
 )
 
 select 
   t.*,
-    case when t.date>='2022-12-23' then 'Holidays period' else 'Before Holidays' end as period,
+    case when t.date>='2023-01-14' then 'After period' else 'Previous period' end as period,
   n.n_new_wallets,
   sum(n_new_wallets) over (partition by period order by date asc rows between unbounded preceding and current row) as cum_n_new_wallets
 from txns t left join new_wallets n using(date)
@@ -155,7 +155,7 @@ with st.expander("Check the analysis"):
 # In[7]:
 
 
-st.subheader("2. Supply before and after holidays")
+st.subheader("2. Supply before and after station")
 st.markdown('**Methods:**')
 st.write('In this analysis we will focus on the LUNA supply. More specifically, we will analyze the following data:')
 st.markdown('● $LUNA supply')
@@ -164,7 +164,6 @@ st.markdown('● Circulating supply')
 
 
 sql="""
---credits: adriaparcerisas
 with SEND as 
 (select SENDER,
   sum(AMOUNT) as sent_amount
@@ -208,7 +207,6 @@ date=CURRENT_DATE-30
     """
 
 sql2="""
---credits: adriaparcerisas
 with SEND as 
 (select SENDER,
   sum(AMOUNT) as sent_amount
@@ -283,7 +281,7 @@ with st.expander("Check the analysis"):
 # In[8]:
 
 
-st.subheader("3. Ecosystem development before and after holidays")
+st.subheader("3. Ecosystem development before and after station")
 st.markdown('**Methods:**')
 st.write('In this analysis we will focus on the Terra main ecosystem development. More specifically, we will analyze the following data:')
 st.markdown('● New deployed contracts')
@@ -295,12 +293,12 @@ st.markdown('● Swaps activity')
 sql="""
 select 
    date_trunc('day',block_timestamp) as date,    
-   case when date>='2022-12-23' then 'Holidays period' else 'Before Holidays' end as period,
+   case when date>='2023-01-14' then 'After period' else 'Previous period' end as period,
   count(distinct tx_id) as n_contracts,
   sum(n_contracts) over (partition by period order by date asc rows between unbounded preceding and current row) as cum_n_contracts
 from terra.core.ez_messages
 where message_type = '/cosmwasm.wasm.v1.MsgInstantiateContract'
-	and block_timestamp >= '2022-12-08' and block_timestamp <= '2023-01-08'
+	and block_timestamp >= '2023-07-21' and block_timestamp <= '2023-01-21'
 group by date, period
 order by date desc
 
@@ -311,13 +309,13 @@ order by date desc
 sql2="""
 select 
    date_trunc('day',block_timestamp) as date,
-      case when date>='2022-12-23' then 'Holidays period' else 'Before Holidays' end as period,
+      case when date>='2023-01-14' then 'After period' else 'Previous period' end as period,
   count(distinct tx:body:messages[0]:contract) as n_contracts,
     sum(n_contracts) over (partition by period order by date asc rows between unbounded preceding and current row) as cum_n_contracts
   from terra.core.fact_transactions 
   --where ATTRIBUTE_KEY in ('contract','u_contract_address','contract_name',
   --'contract_version','contract_addr','contract_address','dao_contract_address','pair_contract_addr','nft_contract')
-  where block_timestamp >= '2022-12-08' and block_timestamp <= '2023-01-08'
+  where block_timestamp >= '2023-01-07' and block_timestamp <= '2023-01-21'
 
 group by date, period
 order by date desc
@@ -328,7 +326,7 @@ sql3="""
 with txns as(
 select 
   date_trunc('day',block_timestamp) as date,
-      case when date>='2022-12-23' then 'Holidays period' else 'Before Holidays' end as period,
+      case when date>='2023-01-14' then 'After period' else 'Previous period' end as period,
   count(distinct tx_id) as n_txns,
   count(distinct trader) as n_wallets,
   sum(to_amount/1e6) as fee_luna,
@@ -336,7 +334,7 @@ select
   sum(n_wallets) over (partition by period order by date asc rows between unbounded preceding and current row) as cum_n_wallets,
   sum(fee_luna) over (partition by period order by date asc rows between unbounded preceding and current row) as cum_fee_luna
 from terra.core.ez_swaps
-  where block_timestamp >= '2022-12-08' and block_timestamp <= '2023-01-08'
+  where block_timestamp >= '2023-01-07' and block_timestamp <= '2023-01-21'
   and to_currency = 'uluna'
 group by date, period
 order by date desc
@@ -352,7 +350,7 @@ select
 from terra.core.ez_swaps
 group by trader
 )
-   where date >= '2022-12-08' and date <= '2023-01-08'
+   where date >= '2023-01-07' and date <= '2023-01-21'
 group by date
 )
 
@@ -461,7 +459,7 @@ with st.expander("Check the analysis"):
 # In[9]:
 
 
-st.subheader("3. Staking before and after holidays")
+st.subheader("3. Staking before and after station")
 st.markdown('**Methods:**')
 st.write('In this analysis we will focus on the Terra staking. More specifically, we will analyze the following data:')
 st.markdown('● Staking actions')
@@ -475,7 +473,7 @@ sql="""
 with txns as(
 select 
   date_trunc('day',block_timestamp) as date,
-      case when date>='2022-12-23' then 'Holidays period' else 'Before Holidays' end as period,
+      case when date>='2023-01-07' then 'After period' else 'Previous period' end as period,
   count(distinct tx_id) as n_txns,
   count(distinct delegator_address) as n_wallets,
   count(distinct validator_address) as n_validators,
@@ -485,7 +483,7 @@ select
   sum(fee_luna) over (partition by period order by date asc rows between unbounded preceding and current row) as cum_fee_luna
 from terra.core.ez_staking
   where action = 'Delegate'
-  and block_timestamp >= '2022-12-08' and block_timestamp <= '2023-01-08'
+  and block_timestamp >= '2023-01-07' and block_timestamp <= '2023-01-21'
 group by date, period
 order by date desc
 ),
@@ -500,7 +498,7 @@ select
 from terra.core.ez_staking
 group by delegator_address
 )
-  where date >= '2022-12-08' and date <= '2023-01-08'
+  where date >= '2023-01-07' and date <= '2023-01-21'
 group by date
 ),
 new_validators as (
@@ -514,7 +512,7 @@ select
 from terra.core.ez_staking
 group by validator_address
 )
-  where date >= '2022-12-08' and date <= '2023-01-08'
+  where date >= '2023-01-07' and date <= '2023-01-21'
 group by date
 )
 
