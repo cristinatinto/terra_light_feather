@@ -598,17 +598,7 @@ with st.expander("Check the analysis"):
         .encode(x='period:N', y='n_new_wallets:Q',color='period')
         .properties(title='New stakers comparison'))
     
-    col1,col2=st.columns(2)
-    with col1:
-        st.altair_chart(alt.Chart(df)
-        .mark_bar()
-        .encode(x='date:N', y='n_new_validators:Q',color='period')
-        .properties(title='Daily new validators evolution'))
     
-    col2.altair_chart(alt.Chart(df)
-        .mark_bar()
-        .encode(x='period:N', y='n_new_validators:Q',color='period')
-        .properties(title='New validators comparison'))
     
 
 
