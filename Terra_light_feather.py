@@ -148,7 +148,7 @@ with st.expander("Check the analysis"):
         .mark_bar()
         .encode(x='period:N', y='n_new_wallets:Q',color='period')
         .properties(title='New users comparison')
-    st.write ('In these graphs we have analysed the activity of Terra, as when there is an announcement the activity of an ecosystem can vary. For this reason, it has been analysed to see if there is any different movement.  Transactions, active wallets, fees and news users have been analysed. In all four cases we can see that the activity has increased favourably, especially in the first 3 days. After that the values have decreased and, in some cases, as in the case of new users, the values are the same as before the launch.  ')	      
+    st.write('In these graphs we have analysed the activity of Terra, as when there is an announcement the activity of an ecosystem can vary. For this reason, it has been analysed to see if there is any different movement.  Transactions, active wallets, fees and news users have been analysed. In all four cases we can see that the activity has increased favourably, especially in the first 3 days. After that the values have decreased and, in some cases, as in the case of new users, the values are the same as before the launch.')	      
 
  
 
