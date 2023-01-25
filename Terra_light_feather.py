@@ -299,7 +299,7 @@ select
   sum(n_contracts) over (partition by period order by date asc rows between unbounded preceding and current row) as cum_n_contracts
 from terra.core.ez_messages
 where message_type = '/cosmwasm.wasm.v1.MsgInstantiateContract'
-	and block_timestamp >= '2023-07-21' and block_timestamp <= '2023-01-21'
+	and block_timestamp >= '2023-01-07' and block_timestamp <= '2023-01-21'
 group by date, period
 order by date desc
 
