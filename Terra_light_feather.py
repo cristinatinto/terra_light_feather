@@ -473,7 +473,7 @@ with st.expander("Check the analysis"):
         .mark_bar()
         .encode(x='period:N', y='n_new_wallets:Q',color='period')
         .properties(title='New stakers comparison'))
-    
+    st.write ('Finally, we have analysed the staking before and after station. We can clearly see that daily staking actions, active stakers, staking fees and new stakers have increased significantly. However, after the first three days of the announcement, the values of these graphs went down again, almost reaching the previous values in some cases. If we look at the daily validators evolution, it is the only case where the validators remain practically the same as before the announcement. ')
     
     
 
