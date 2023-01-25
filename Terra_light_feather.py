@@ -33,10 +33,10 @@ for percent_complete in range(100):
 # In[5]:
 
 
-st.title('Terra New Year New Activity')
+st.title('Terra light feather')
 st.write('')
-st.markdown('The holidays and New Year are often chaotic in the crypto and DEFI space, as users make a spree of new transactions and wallets as they receive (and give) some cash and coins as holiday gifts.')
-st.markdown(' The idea of this work is to try to respond if this flurry of winter activity has impacted the Terra ecosystem, if users are creating new wallets or buying tokens with their newfound holiday wealth.')
+st.markdown(' The launch of Station is an interchain wallet that simplifies the often complex, cumbersome process of interacting with multiple blockchain networks. With Station, users can easily stake, vote, send and receive tokens, and interact with their favorite dApps across all supported chains [Source](https://medium.com/terra-money/introducing-station-abd478aa4059). ')
+st.markdown(' The idea of this work is to try to respond if this announcement has impacted the Terra ecosystem, if users are creating new wallets or buying tokens with station new features.')
 st.write('This dashboard comprehens the following sections:')
 st.markdown('1. Terra main activity comparison before and after station')
 st.markdown('2. Terra supply before and after station')
