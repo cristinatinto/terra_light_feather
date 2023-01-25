@@ -153,140 +153,11 @@ with st.expander("Check the analysis"):
 
 		      
 
- 
-
-
-# In[7]:
-
-
-st.subheader("2. Supply before and after station")
-st.markdown('**Methods:**')
-st.write('In this analysis we will focus on the LUNA supply. More specifically, we will analyze the following data:')
-st.markdown('● $LUNA supply')
-st.markdown('● Circulating supply')
-
-
-
-sql="""
-with SEND as 
-(select SENDER,
-  sum(AMOUNT) as sent_amount
-from 
-terra.core.ez_transfers
-WHERE
-CURRENCY ilike 'uluna'
-group by SENDER
-  ),
-  
-RECEIVE as 
-(select RECEIVER,
-  sum(AMOUNT) as received_amount
-from 
-terra.core.ez_transfers
-WHERE
-CURRENCY ilike 'uluna'
-group by RECEIVER
-  ),
-total_supp as (select sum(received_amount)/1e4 as total_supply 
-  from RECEIVE r 
-  left join SEND s on r.RECEIVER=s.SENDER 
-  where sent_amount is null),
-t1 as
-(select date_trunc('day',BLOCK_TIMESTAMP) as date,
-sum(case when FROM_CURRENCY ilike 'uluna' then FROM_AMOUNT/1e6 else null end) as from_amountt,
-sum(case when to_CURRENCY ilike 'uluna' then FROM_AMOUNT/1e6 else null end) as to_amountt,
-from_amountt-to_amountt as circulating_volume
-from
-  terra.core.ez_swaps
-group by 1
-), 
-  t3 as (select 
-sum(circulating_volume) over (order by date) as circulating_supply ,
-  DATE from t1
-  )
-select total_supply,circulating_supply,  circulating_supply*100/total_supply as ratio 
-  from t3 join total_supp
-where 
-date=CURRENT_DATE-30
-    """
-
-sql2="""
-with SEND as 
-(select SENDER,
-  sum(AMOUNT) as sent_amount
-from 
-terra.core.ez_transfers
-WHERE
-CURRENCY ilike 'uluna'
-group by SENDER
-  ),
-  
-RECEIVE as 
-(select RECEIVER,
-  sum(AMOUNT) as received_amount
-from 
-terra.core.ez_transfers
-WHERE
-CURRENCY ilike 'uluna'
-group by RECEIVER
-  ),
-total_supp as (select sum(received_amount)/1e4 as total_supply 
-  from RECEIVE r 
-  left join SEND s on r.RECEIVER=s.SENDER 
-  where sent_amount is null),
-t1 as
-(select date_trunc('day',BLOCK_TIMESTAMP) as date,
-sum(case when FROM_CURRENCY ilike 'uluna' then FROM_AMOUNT/1e6 else null end) as from_amountt,
-sum(case when to_CURRENCY ilike 'uluna' then FROM_AMOUNT/1e6 else null end) as to_amountt,
-from_amountt-to_amountt as circulating_volume
-from
-  terra.core.ez_swaps
-group by 1
-), 
-  t3 as (select 
-sum(circulating_volume) over (order by date) as circulating_supply ,
-  DATE from t1
-  )
-select total_supply,circulating_supply,  circulating_supply*100/total_supply as ratio 
-  from t3 join total_supp
-where 
-date=CURRENT_DATE-1
-
-"""
-
-results = memory(sql)
-df = pd.DataFrame(results.records)
-df.info()
-
-results2 = memory(sql2)
-df2 = pd.DataFrame(results2.records)
-df2.info()
-
-with st.expander("Check the analysis"):
-    col1,col2=st.columns(2)
-    with col1:
-        st.metric('Total supply before holidays',df['total_supply'])
-    col2.metric('Total supply after holidays',df2['total_supply'])
-    
-    col1,col2=st.columns(2)
-
-    with col1:
-        st.metric('Circulating supply before holidays',df['circulating_supply'])
-    col2.metric('Circulating supply after holidays',df2['circulating_supply'])
-    
-    col1,col2=st.columns(2)
-    with col1:
-        st.metric('Ratio before holidays',df['ratio'])
-    col2.metric('Ratio after holidays',df2['ratio'])
-    st.write ('In these graphs we have analysed the ecosystem development, as after a launch, the criteria analysed below may vary. Firstly, we see that daily swaps, new swappers and new contracts have had a very favourable evolution after the station. Daily active contracts and active swappers have also increased, but they were already on an upward trend before. Swap fees have increased but insignificantly.')
-    
-    
-
 
 # In[8]:
 
 
-st.subheader("3. Ecosystem development before and after station")
+st.subheader("2. Ecosystem development before and after station")
 st.markdown('**Methods:**')
 st.write('In this analysis we will focus on the Terra main ecosystem development. More specifically, we will analyze the following data:')
 st.markdown('● New deployed contracts')
@@ -458,13 +329,14 @@ with st.expander("Check the analysis"):
         .mark_bar()
         .encode(x='period:N', y='n_new_wallets:Q',color='period')
         .properties(title='New swappers comparison'))
-    
+    st.write ('In these graphs we have analysed the ecosystem development, as after a launch, the criteria analysed below may vary. Firstly, we see that daily swaps, new swappers and new contracts have had a very favourable evolution after the station. Daily active contracts and active swappers have also increased, but they were already on an upward trend before. Swap fees have increased but insignificantly.')
+
 
 
 # In[9]:
 
 
-st.subheader("4. Staking before and after station")
+st.subheader("3. Staking before and after station")
 st.markdown('**Methods:**')
 st.write('In this analysis we will focus on the Terra staking. More specifically, we will analyze the following data:')
 st.markdown('● Staking actions')
