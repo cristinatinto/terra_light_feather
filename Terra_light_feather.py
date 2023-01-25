@@ -479,7 +479,15 @@ with st.expander("Check the analysis"):
 
 
 # In[14]:
-
+st.write('
+- Transactions, active wallets, fees and news users have been analysed the activity has increased favourably, especially in the first 3 days. 
+- In the case of new users, the values are the same as before the launch.
+- Daily swaps, new swappers and new contracts have had a very favourable evolution after the station.
+- Daily active contracts and active swappers have also increased, but they were already on an upward trend before.
+- Swap fees have increased insignificantly.
+- Daily staking actions, active stakers, staking fees and new stakers have increased radically. 
+- After the first three days of the announcement, the values of these graphs went down again.
+- The validators remain practically the same as before the announcement.')
 
 st.markdown('This dashboard has been done by _Cristina Tintó_ powered by **Flipside Crypto** data and carried out for **MetricsDAO**.')
 
