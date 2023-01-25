@@ -460,7 +460,7 @@ with st.expander("Check the analysis"):
 # In[9]:
 
 
-st.subheader("3. Staking before and after station")
+st.subheader("4. Staking before and after station")
 st.markdown('**Methods:**')
 st.write('In this analysis we will focus on the Terra staking. More specifically, we will analyze the following data:')
 st.markdown('● Staking actions')
@@ -473,7 +473,7 @@ sql="""
 with txns as(
 select 
   date_trunc('day',block_timestamp) as date,
-      case when date>='2023-01-07' then 'After period' else 'Previous period' end as period,
+      case when date>='2023-01-14' then 'After period' else 'Previous period' end as period,
   count(distinct tx_id) as n_txns,
   count(distinct delegator_address) as n_wallets,
   count(distinct validator_address) as n_validators,
