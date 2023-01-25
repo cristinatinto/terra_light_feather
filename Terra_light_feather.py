@@ -278,6 +278,7 @@ with st.expander("Check the analysis"):
     with col1:
         st.metric('Ratio before holidays',df['ratio'])
     col2.metric('Ratio after holidays',df2['ratio'])
+    st.write ('In these graphs we have analysed the ecosystem development, as after a launch, the criteria analysed below may vary. Firstly, we see that daily swaps, new swappers and new contracts have had a very favourable evolution after the station. Daily active contracts and active swappers have also increased, but they were already on an upward trend before. Swap fees have increased but insignificantly.')
     
     
 
