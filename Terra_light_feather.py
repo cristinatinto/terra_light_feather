@@ -489,8 +489,8 @@ st.markdown('- Swap fees have increased insignificantly.')
 st.markdown('- Daily staking actions, active stakers, staking fees and new stakers have increased radically. ')
 st.markdown('- After the first three days of the announcement, the values of these graphs went down again.')
 st.markdown('- The validators remain practically the same as before the announcement.')
-sr.write(' ')
-sr.write(' ')
+st.write(' ')
+st.write(' ')
 
 
 st.markdown('This dashboard has been done by _Cristina Tintó_ powered by **Flipside Crypto** data and carried out for **MetricsDAO**. ')
