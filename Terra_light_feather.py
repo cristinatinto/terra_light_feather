@@ -45,7 +45,7 @@ st.markdown('4. Terra staking activity before and after station')
 st.write('')
 st.subheader('1. Terra main activity')
 st.markdown('**Methods:**')
-st.write('In this analysis we will focus on the activity of Terra ecosystem during this past month. More specifically, we will analyze the following data:')
+st.write('In this analysis we will focus on the activity of Terra ecosystem during the weeks before and after station announcement. More specifically, we will analyze the following data:')
 st.markdown('● Total number transactions')
 st.markdown('● Total active users')
 st.markdown('● Total volume moved')
@@ -89,6 +89,7 @@ order by date desc
 """
 
 st.experimental_memo(ttl=50000)
+@st.cache
 def memory(code):
     data=sdk.query(code)
     return data
@@ -469,7 +470,6 @@ st.markdown('● Validators')
 
 
 sql="""
---credits: cryptolcicle
 with txns as(
 select 
   date_trunc('day',block_timestamp) as date,
