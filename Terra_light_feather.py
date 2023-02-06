@@ -87,7 +87,7 @@ from txns t left join new_wallets n using(date)
 order by date desc
 
 """	
-st.experimental_memo(ttl=50000)
+st.experimental_memo(ttl=500000)
 @st.cache
 def memory(code):
     data=sdk.query(code)
